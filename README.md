@@ -1,3 +1,98 @@
+# LiveChat (Laravel)
+
+Panduan singkat untuk menjalankan project ini setelah di-clone dari GitHub.
+
+Catatan: project menggunakan Laravel + Livewire. Halaman dashboard dibuat menggunakan template Feane (di `public/template/feane`). Chat tetap dikelola oleh Livewire.
+
+## Prasyarat
+- PHP 8.1+ (rekomendasi 8.1 / 8.2)
+- Composer
+- Node.js 16+ dan npm atau yarn
+- Database (MySQL, MariaDB, atau SQLite)
+
+## Langkah cepat (Linux / macOS)
+1. Clone repository
+
+```bash
+git clone <repo-url> livechat
+cd livechat
+```
+
+2. Copy file environment dan atur variabel
+
+```bash
+cp .env.example .env
+# lalu edit .env: atur DB_CONNECTION, DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD, dsb.
+```
+
+3. Install dependency PHP
+
+```bash
+composer install
+php artisan key:generate
+```
+
+4. Install dependency JavaScript dan build (development)
+
+```bash
+npm install
+# development (Vite watch)
+npm run dev
+# atau build untuk produksi
+npm run build
+```
+
+5. Tautkan storage (jika perlu)
+
+```bash
+php artisan storage:link
+```
+
+6. Migrasi dan seeder
+
+```bash
+php artisan migrate --seed
+```
+
+7. Jalankan server lokal
+
+```bash
+php artisan serve
+# buka http://127.0.0.1:8000/dashboard
+```
+
+## Langkah cepat (Windows - PowerShell)
+
+```powershell
+git clone <repo-url> livechat
+cd livechat
+Copy-Item .env.example .env
+composer install
+php artisan key:generate
+npm install
+npm run dev
+php artisan storage:link
+php artisan migrate --seed
+php artisan serve
+```
+
+## Catatan penting
+- Hanya halaman `resources/views/dashboard.blade.php` yang telah disesuaikan memakai template Feane. Halaman lain (login, profile, chat Livewire dll.) tetap menggunakan layout lama — routing dan logic Laravel/Livewire tidak diubah.
+- Jika Anda menggunakan Vite dan mengalami masalah asset, jalankan `npm run build` untuk menghasilkan `public/build`.
+- Pastikan `APP_URL` di `.env` cocok dengan URL lokal Anda jika ada masalah CORS atau callback.
+
+## Running background workers (optional)
+- Jika menggunakan queue atau broadcasting:
+
+```bash
+php artisan queue:work
+```
+
+## Troubleshooting singkat
+- `composer memory exhausted` → jalankan `COMPOSER_MEMORY_LIMIT=-1 composer install` (Linux/macOS) atau set environment variable di Windows.
+- Permission error pada `storage` → berikan permission write untuk folder `storage` dan `bootstrap/cache`.
+
+Jika mau, saya bisa menambahkan instruksi setup untuk Docker, atau menambahkan skrip `make`/`composer` untuk mempermudah setup dev.
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
