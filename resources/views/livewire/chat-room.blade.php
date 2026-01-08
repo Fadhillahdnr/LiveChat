@@ -134,5 +134,39 @@
     });
 </script>
 
+<!-- Groq chat popup + floating button (outside main wrapper) -->
+<div id="groq-popup-backdrop" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.4);z-index:9998;">
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);width:420px;max-width:90%;background:white;border-radius:8px;box-shadow:0 10px 30px rgba(0,0,0,0.2);overflow:hidden;z-index:9999;">
+        <div style="padding:12px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;">
+            <strong>Admin Bot (Groq)</strong>
+            <button id="groq-close" style="background:none;border:none;cursor:pointer;font-size:20px;padding:0;">✕</button>
+        </div>
+        <div style="padding:12px;max-height:500px;overflow-y:auto;">
+            @livewire('groq-chat')
+        </div>
+    </div>
+</div>
+
+<button id="groq-open" style="position:fixed;bottom:24px;right:24px;z-index:9999;background:#0ea5a4;color:white;border-radius:50%;width:56px;height:56px;display:flex;align-items:center;justify-content:center;font-size:24px;border:none;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.15);">🤖</button>
+
+<script>
+    (function(){
+        const open = document.getElementById('groq-open');
+        const close = document.getElementById('groq-close');
+        const backdrop = document.getElementById('groq-popup-backdrop');
+
+        function show() { if (backdrop) { backdrop.style.display = 'flex'; } }
+        function hide() { if (backdrop) { backdrop.style.display = 'none'; } }
+        
+        if (open) open.addEventListener('click', show);
+        if (close) close.addEventListener('click', hide);
+
+        // close when clicking outside the popup
+        if (backdrop) backdrop.addEventListener('click', function(e){
+            if (e.target === backdrop) hide();
+        });
+    })();
+</script>
+
 
 

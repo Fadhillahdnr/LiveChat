@@ -51,4 +51,8 @@ class User extends Authenticatable
         return $this->role === 'admin';
     }
 
+    protected $casts = [
+        'is_bot' => 'boolean',
+    ];
+
 }

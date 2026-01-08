@@ -1,6 +1,6 @@
 <?php
 
-use App\Livewire\ChatRoom;
+use App\Http\Livewire\ChatRoom;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ProfileController;
@@ -19,17 +19,17 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // CHAT ROUTE
-    Route::get('/chat/{user}', ChatRoom::class)->name('chat');
 });
 
 Route::middleware('auth')->group(function () {
-
+    
     Route::get('/chat/fetch/{user}', [ChatController::class, 'fetch']);
     Route::post('/chat/send', [ChatController::class, 'send']);
+    Route::get('/chat/{user}', ChatRoom::class)->name('chat');
     Route::get('/chat/check-latest', function () {
         return \App\Models\Message::where('to_id', auth()->id())
-            ->latest()
-            ->first();
+        ->latest()
+        ->first();
     });
 
 });
